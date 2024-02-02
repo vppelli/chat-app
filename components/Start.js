@@ -1,5 +1,5 @@
 
-import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert, ImageBackground, Image } from 'react-native';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, ImageBackground, Image, KeyboardAvoidingView, Platform } from 'react-native';
 import { useState } from 'react';
 
 const Start = ({ navigation }) => {
@@ -24,21 +24,26 @@ const Start = ({ navigation }) => {
                         <Text style={styles.textDisplay}>Choose Background Color:</Text>
                     </View>
                     <View style={styles.innerBox}>
-                        <TouchableOpacity style={styles.circle1} onPress={() => setBackground('#090C08')}/>
-                        <TouchableOpacity style={[styles.circle1, styles.circle2]} onPress={() => setBackground('#474056')}/>
-                        <TouchableOpacity style={[styles.circle1, styles.circle3]} onPress={() => setBackground('#8A95A5')}/>
-                        <TouchableOpacity style={[styles.circle1, styles.circle4]} onPress={() => setBackground('#B9C6AE')}/>
+                        <TouchableOpacity style={styles.circle1}  accessible={true} accessibilityLabel="Black" accessibilityHint="Changes color to Black" accessibilityRole="button" onPress={() => setBackground('#090C08')} />
+                        <TouchableOpacity style={[styles.circle1, styles.circle2]} accessible={true} accessibilityLabel="Very dark grayish violet" accessibilityHint="Changes color to Very dark grayish violet" accessibilityRole="button" onPress={() => setBackground('#474056')} />
+                        <TouchableOpacity style={[styles.circle1, styles.circle3]} accessible={true} accessibilityLabel="Dark grayish blue" accessibilityHint="Changes color to Dark grayish blue" accessibilityRole="button" onPress={() => setBackground('#8A95A5')} />
+                        <TouchableOpacity style={[styles.circle1, styles.circle4]} accessible={true} accessibilityLabel="Grayish green" accessibilityHint="Changes color to Grayish green" accessibilityRole="button" onPress={() => setBackground('#B9C6AE')} />
                     </View>
                     <View style={styles.innerBox}>
                         <TouchableOpacity
                             style={styles.button}
-                            onPress={() => navigation.navigate('Chat', { name: name, background: background})}
+                            accessible={true}
+                            accessibilityLabel="Start Chatting"
+                            accessibilityHint="Press to start chatting"
+                            accessibilityRole="button"
+                            onPress={() => navigation.navigate('Chat', { name: name, background: background })}
                         >
                             <Text style={styles.textButton}>Start Chatting</Text>
                         </TouchableOpacity>
                     </View>
                 </View>
             </ImageBackground>
+            {Platform.OS === "ios" ? <KeyboardAvoidingView behavior="padding" /> : null}
         </View>
     );
 }

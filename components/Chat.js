@@ -2,11 +2,14 @@ import { useEffect, useState } from 'react';
 import { StyleSheet, View, Text, KeyboardAvoidingView, Platform } from 'react-native';
 import { GiftedChat, Bubble } from "react-native-gifted-chat";
 
-const Chat = ({ route, navigation }) => {
-    const { name, background } = route.params;
+import { collection, addDoc, onSnapshot, query, where, orderBy } from "firebase/firestore";
+
+const Chat = ({ db, route, navigation }) => {
+
+    const { name, background, userID } = route.params;
     const [messages, setMessages] = useState([]);
     const onSend = (newMessages) => {
-        setMessages(previousMessages => GiftedChat.append(previousMessages, newMessages))
+        addDoc(collection(db, "messages"), newMessages[0])
     }
     const renderBubble = (props) => {
         return <Bubble
@@ -23,28 +26,22 @@ const Chat = ({ route, navigation }) => {
     }
 
     useEffect(() => {
-        setMessages([
-            {
-                _id: 1,
-                text: "Hello developer",
-                createdAt: new Date(),
-                user: {
-                    _id: 2,
-                    name: "React Native",
-                    avatar: "https://images.unsplash.com/photo-1503023345310-bd7c1de61c7d?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8aHVtYW58ZW58MHx8MHx8fDA%3D",
-                },
-            },
-            {
-                _id: 2,
-                text: name + " Joined the chat",
-                createdAt: new Date(),
-                system: true,
-            },
-        ]);
-    }, []);
-
-    useEffect(() => {
         navigation.setOptions({ title: name });
+        const q = query(collection(db, "messages"), orderBy("createdAt", "desc"));
+        const unsubMessages = onSnapshot(q, (documentsSnapshot) => {
+            let newMsgs = [];
+            documentsSnapshot.forEach(doc => {
+                newMsgs.push({
+                    id: doc.id, ...doc.data(),
+                    createdAt: new Date(doc.data().createdAt.toMillis())
+                })
+            });
+            setMessages(newMsgs);
+        });
+
+        return () => {
+            if (unsubMessages) unsubMessages();
+        }
     }, []);
 
     return (
@@ -54,7 +51,8 @@ const Chat = ({ route, navigation }) => {
                 renderBubble={renderBubble}
                 onSend={messages => onSend(messages)}
                 user={{
-                    _id: 1
+                    _id: userID,
+                    name: name
                 }}
             />
             {Platform.OS === 'android' ? <KeyboardAvoidingView behavior="height" /> : null}
@@ -69,3 +67,12 @@ const styles = StyleSheet.create({
 });
 
 export default Chat;
+
+const firebaseConfig = {
+    apiKey: "AIzaSyDrfYwU2cSP47v0_XDKyWwxmr9kZ8aXacs",
+    authDomain: "chat-app-36570.firebaseapp.com",
+    projectId: "chat-app-36570",
+    storageBucket: "chat-app-36570.appspot.com",
+    messagingSenderId: "1047620234027",
+    appId: "1:1047620234027:web:0c7cbc89d8866a061cf36e"
+};

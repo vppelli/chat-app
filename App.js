@@ -1,6 +1,8 @@
 import { useEffect } from "react";
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Alert, View } from 'react-native';
+import { Dialogflow_V2 } from 'react-native-dialogflow';
+import { dialogflowConfig } from "./dialogconfig/env";
 // import netinfo to check online or offline
 import { useNetInfo } from '@react-native-community/netinfo';
 // import react Navigation
@@ -18,7 +20,16 @@ import { getFirestore, disableNetwork, enableNetwork } from "firebase/firestore"
 
 const App = () => {
   const connectionStatus = useNetInfo();
+  const dialogFlow = () => {
+    Dialogflow_V2.setConfiguration(
+      dialogflowConfig.client_email,
+      dialogflowConfig.private_key,
+      Dialogflow_V2.LANG_ENGLISH_US,
+      dialogflowConfig.project_id,
+    );
+  }
   useEffect(() => {
+    dialogFlow();
     if (connectionStatus.isConnected === false) {
       Alert.alert("Connection lost!");
       disableNetwork(db);

@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { StyleSheet, View, Text, KeyboardAvoidingView, Platform } from 'react-native';
 import { GiftedChat, Bubble, InputToolbar } from "react-native-gifted-chat";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Dialogflow_V2 } from 'react-native-dialogflow';
+
 
 import { collection, addDoc, onSnapshot, query, orderBy } from "firebase/firestore";
 
@@ -9,9 +11,34 @@ const Chat = ({ db, route, navigation, isConnected }) => {
 
     const { name, background, userID } = route.params;
     const [messages, setMessages] = useState([]);
+
     const onSend = (newMessages) => {
         addDoc(collection(db, "messages"), newMessages[0])
+        const userMessage = newMessages[0].text;
+        Dialogflow_V2.requestQuery(
+            userMessage,
+            result => {
+                // Handle chatbot response
+                const chatbotResponse = result.queryResult.fulfillmentText;
+                // Add the chatbot's response to the chat interface
+                const botMessage = {
+                    _id: Math.random().toString(36).substring(7),
+                    text: chatbotResponse,
+                    createdAt: new Date(),
+                    user: {
+                        _id: 2,
+                        name: 'Chatbot',
+                        avatar: "https://cdn3.vectorstock.com/i/1000x1000/31/67/robot-icon-bot-sign-design-chatbot-symbol-vector-27973167.jpg"
+                    },
+                };
+                setMessages(previousMessages => GiftedChat.append(previousMessages, [botMessage]));
+            },
+            error => {
+                // Handle errors
+            }
+        );
     }
+
     const renderBubble = (props) => {
         return <Bubble
             {...props}
@@ -25,6 +52,7 @@ const Chat = ({ db, route, navigation, isConnected }) => {
             }}
         />
     }
+
     const renderInputToolbar = (props) => {
         if (isConnected === true) return <InputToolbar {...props} />;
         else return null;

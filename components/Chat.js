@@ -32,9 +32,6 @@ const Chat = ({ db, route, navigation, isConnected }) => {
                     },
                 };
                 setMessages(previousMessages => GiftedChat.append(previousMessages, [botMessage]));
-            },
-            error => {
-                // Handle errors
             }
         );
     }

@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Alert, View } from 'react-native';
+import { StyleSheet, Alert, LogBox } from 'react-native';
 // import ChatBot called DialogFlow
 import { Dialogflow_V2 } from 'react-native-dialogflow';
 import { dialogflowConfig } from "./dialogConfig";

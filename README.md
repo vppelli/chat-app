@@ -1,4 +1,4 @@
-Chat App
+[![ChatApp](https://github.com/vppelli/Vppelli/blob/main/img/CHATAPP.png)](https://github.com/vppelli/Vppelli/blob/main/img/CHATAPP.png)
 
 # Description
 The Chat App lets users chat with others. Users can send images, take photos, send their location, and talk to a chat bot. Using Firebase to store messages, and images, while using Dialogflow for the in app chat bot.

@@ -1,17 +1,21 @@
 import { useEffect, useState } from 'react';
-import { StyleSheet, View, Text, KeyboardAvoidingView, Platform } from 'react-native';
+import { StyleSheet, View, KeyboardAvoidingView, Platform } from 'react-native';
 import { GiftedChat, Bubble, InputToolbar } from "react-native-gifted-chat";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+// Import the Chat-bot feature
 import { Dialogflow_V2 } from 'react-native-dialogflow';
-
-
+// Import the Map message features
+import MapView from 'react-native-maps';
+// Screens
+import CustomActions from './CustomActions';
+// Firebase
 import { collection, addDoc, onSnapshot, query, orderBy } from "firebase/firestore";
 
-const Chat = ({ db, route, navigation, isConnected }) => {
-
+const Chat = ({ db, route, navigation, isConnected, storage }) => {
     const { name, background, userID } = route.params;
     const [messages, setMessages] = useState([]);
 
+    // Messages
     const onSend = (newMessages) => {
         addDoc(collection(db, "messages"), newMessages[0])
         const userMessage = newMessages[0].text;
@@ -26,8 +30,8 @@ const Chat = ({ db, route, navigation, isConnected }) => {
                     text: chatbotResponse,
                     createdAt: new Date(),
                     user: {
-                        _id: 2,
-                        name: 'Chatbot',
+                        _id: 1,
+                        name: "Chatbot",
                         avatar: "https://cdn3.vectorstock.com/i/1000x1000/31/67/robot-icon-bot-sign-design-chatbot-symbol-vector-27973167.jpg"
                     },
                 };
@@ -36,6 +40,7 @@ const Chat = ({ db, route, navigation, isConnected }) => {
         );
     }
 
+    // GiftedChat Code for ui and actions
     const renderBubble = (props) => {
         return <Bubble
             {...props}
@@ -49,12 +54,37 @@ const Chat = ({ db, route, navigation, isConnected }) => {
             }}
         />
     }
-
     const renderInputToolbar = (props) => {
         if (isConnected === true) return <InputToolbar {...props} />;
         else return null;
     }
+    const renderCustomActions = (props) => {
+        return <CustomActions storage={storage} userID={userID} {...props} />;
+    }
+    const renderCustomView = (props) => {
+        const { currentMessage } = props;
+        if (currentMessage.location) {
+            return (
+                <MapView
+                    style={{
+                        width: 150,
+                        height: 100,
+                        borderRadius: 13,
+                        margin: 3
+                    }}
+                    region={{
+                        latitude: currentMessage.location.latitude,
+                        longitude: currentMessage.location.longitude,
+                        latitudeDelta: 0.0922,
+                        longitudeDelta: 0.0421,
+                    }}
+                />
+            );
+        }
+        return null;
+    }
 
+    // Message Cache
     const cacheMsgData = async (msgsToCache) => {
         try {
             await AsyncStorage.setItem("message_data", JSON.stringify(msgsToCache));
@@ -101,6 +131,8 @@ const Chat = ({ db, route, navigation, isConnected }) => {
                 messages={messages}
                 renderBubble={renderBubble}
                 renderInputToolbar={renderInputToolbar}
+                renderActions={renderCustomActions}
+                renderCustomView={renderCustomView}
                 onSend={messages => onSend(messages)}
                 user={{
                     _id: userID,

@@ -1,8 +1,9 @@
 import { useEffect } from "react";
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Alert, View } from 'react-native';
+// import ChatBot called DialogFlow
 import { Dialogflow_V2 } from 'react-native-dialogflow';
-import { dialogflowConfig } from "./dialogconfig/env";
+import { dialogflowConfig } from "./dialogConfig";
 // import netinfo to check online or offline
 import { useNetInfo } from '@react-native-community/netinfo';
 // import react Navigation
@@ -15,8 +16,12 @@ import Start from './components/Start';
 // Create the navigator
 const Stack = createNativeStackNavigator();
 
+// ignores error Message in Welcome Screen
+LogBox.ignoreLogs(["AsyncStorage has been extracted from"]);
+
 import { initializeApp } from "firebase/app";
 import { getFirestore, disableNetwork, enableNetwork } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
 
 const App = () => {
   const connectionStatus = useNetInfo();
@@ -28,6 +33,7 @@ const App = () => {
       dialogflowConfig.project_id,
     );
   }
+
   useEffect(() => {
     dialogFlow();
     if (connectionStatus.isConnected === false) {
@@ -39,12 +45,12 @@ const App = () => {
   }, [connectionStatus.isConnected]);
 
   const firebaseConfig = {
-    apiKey: `${process.env.FIREBASE_API_KEY}`,
-    authDomain: `${process.env.FIREBASE_AUTH_DOMAIN}`,
-    projectId: `${process.env.FIREBASE_PROJECT_ID}`,
-    storageBucket: `${process.env.FIREBASE_STORAGE_BUCKET}`,
-    messagingSenderId: `${process.env.FIREBASE_MESSAGING_SENDER_ID}`,
-    appId: `${process.env.FIREBASE_APP_ID}`
+    apiKey: process.env.EXPO_PUBLIC_FIREBASE_API_KEY,
+    authDomain: process.env.EXPO_PUBLIC_FIREBASE_AUTH_DOMAIN,
+    projectId: process.env.EXPO_PUBLIC_FIREBASE_PROJECT_ID,
+    storageBucket: process.env.EXPO_PUBLIC_FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: process.env.EXPO_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
+    appId: process.env.EXPO_PUBLIC_FIREBASE_APP_ID
   };
 
   // Initialize Firebase
@@ -52,6 +58,7 @@ const App = () => {
 
   // Initialize Cloud Firestore and get a reference to the service
   const db = getFirestore(app);
+  const storage = getStorage(app);
 
   return (
     <NavigationContainer>
@@ -65,7 +72,7 @@ const App = () => {
         <Stack.Screen
           name="Chat"
         >
-          {props => <Chat isConnected={connectionStatus.isConnected} db={db} {...props} />}
+          {props => <Chat isConnected={connectionStatus.isConnected} db={db} storage={storage} {...props} />}
         </Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer>

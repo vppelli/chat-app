@@ -1,7 +1,8 @@
-[![ChatApp](https://github.com/vppelli/Vppelli/blob/main/img/CHATAPP.png)](https://github.com/vppelli/Vppelli/blob/main/img/CHATAPP.png)
+[<picture><source media="(prefers-color-scheme: dark)" srcset="https://github.com/vppelli/Vppelli/blob/main/img/CHATAPP.png"><source media="(prefers-color-scheme: light)" srcset="https://github.com/vppelli/Vppelli/blob/main/img/LCHATAPP.png"><img alt="ChatApp link" src="https://github.com/vppelli/Vppelli/blob/main/img/CHATAPP.png">
+</picture>](https://github.com/vppelli/chat-app)
 
 # Description
-The Chat App lets users chat with others. Users can send images, take photos, send their location, and talk to a chat bot. Using Firebase to store messages, and images, while using Dialogflow for the in app chat bot.
+The Chat App lets users chat with others. Users can send images, take photos, send their location, and talk to a chatbot. Using Firebase to store messages, and images, while using Dialogflow for the in-app chatbot.
 
 ## Objective
 To build a chat app for mobile devices using React Native. The app will
@@ -24,21 +25,21 @@ location.
 - The ability to send the audio file.
 
 ## Setup
-> Step by step on how to setup and run chat app.
+> Step by step on how to set up and run the chat app.
 - Download the project or Clone this repository.
 - Make sure you have **Node.js** installed on terminal
 - Install **Expo** globally on terminal
-- Inside the terminal navigate to project folder and install all dependencies `npm install`
+- Inside the terminal navigate to the project folder and install all dependencies `npm install`
 - Starting up the Chat app
 > Both Firebase and Dialogflow use Google
-  - Create Firebase Account and setup
-  - Create Dialogflow Account and setup
-  - Aquire the keys for both
-  - Make sure Firebase you `allow read, write:` **ture**
+  - Create a Firebase Account and setup
+  - Create a Dialogflow Account and setup
+  - Acquire the keys to both
+  - Make sure Firebase you `allow read, write:` **true**
 - Adding your Firebase and Dialogflow keys into Project
-> I am using Environment variables ( .env ) file.
+> I am using the Environment variables ( .env ) file.
 > **Environment variables in Node are used to store sensitive data such as passwords, API credentials, and other information that should not be written directly in code.**
-> To use this create a .env file to store your Keys, **Make sure** you have it in the root of project. Use Correct Naming `EXPO_PUBLIC_` must go infront of [NAME]="SecretAPIkey"
+> To use this create a .env file to store your Keys, **Make sure** you have it in the root of the project. Use Correct Naming `EXPO_PUBLIC_` must go in front of [NAME]="SecretAPIkey"
   - Location for FirebaseConfig in [App.js](https://github.com/vppelli/chat-app/blob/main/App.js#L47)
   <img src="https://github.com/vppelli/chat-app/blob/main/img/firebaseconfig.png">
   
@@ -47,11 +48,11 @@ location.
   
 - Lunching Chat App
   - Download **Expo Go** on your mobile device
-  - Create a Account to use
+  - Create an Account to use
   - Make sure you are on the same network connection as the Hosted app
-  - Inside the terminal navigate to project folder
+  - Inside the terminal navigate to the project folder
   - type `npx expo start` This will start the app
-  - Inside the Expo Go app you should see your app, Click it to view!
+  - Inside the Expo Go app you should see your app, Click it to view it!
 ## Used
 - React Native
 - JavaScript

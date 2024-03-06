@@ -9,6 +9,9 @@ To build a chat app for mobile devices using React Native. The app will
 provide users with a chat interface and options to share images and their
 location.
 
+### Case Study
+https://vppelli.github.io/portfolio-website/chat-app.html
+
 ## Table of Content
 - [Project Setup](#setup)
 - [Used](#used)
@@ -72,5 +75,12 @@ location.
 - dialogflow
 - gifted-chat
 - maps
+
+## Links
+Expo: https://expo.dev
+
+Firebase: https://firebase.google.com
+
+Dialogflow: https://cloud.google.com/dialogflow?hl=en
 
 [![To The Top](https://img.shields.io/badge/To_the_Top-Clickme-white?style=for-the-badge)](https://github.com/vppelli/chat-app?tab=readme-ov-file#description)

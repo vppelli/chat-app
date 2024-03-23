@@ -6,7 +6,7 @@ The Chat App lets users chat with others. Users can send images, take photos, se
 
 ## Objective
 To build a chat app for mobile devices using React Native. The app will
-provide users with a chat interface and options to share images and their
+provide users a chat interface and options to share images and their
 location.
 
 ### Case Study
@@ -32,7 +32,7 @@ https://vppelli.github.io/portfolio-website/chat-app.html
 - Download the project or Clone this repository.
 - Make sure you have **Node.js** installed on terminal
 - Install **Expo** globally on terminal
-- Inside the terminal navigate to the project folder and install all dependencies `npm install`
+- Inside the terminal, navigate to the project folder and install all dependencies `npm install`
 - Starting up the Chat app
 > Both Firebase and Dialogflow use Google
   - Create a Firebase Account and setup
@@ -53,7 +53,7 @@ https://vppelli.github.io/portfolio-website/chat-app.html
   - Download **Expo Go** on your mobile device
   - Create an Account to use
   - Make sure you are on the same network connection as the Hosted app
-  - Inside the terminal navigate to the project folder
+  - Inside the terminal, navigate to the project folder
   - type `npx expo start` This will start the app
   - Inside the Expo Go app you should see your app, Click it to view it!
 ## Used

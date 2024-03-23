@@ -2,7 +2,7 @@
 </picture>](https://github.com/vppelli/chat-app)
 
 # Description
-The Chat App lets users chat with others. Users can send images, take photos, send their location, and talk to a chatbot. Using Firebase to store messages, and images, while using Dialogflow for the in-app chatbot.
+The Chat App lets users chat with others. Users can send images, take photos, send their location, and talk to a chatbot. Using Firebase to store messages and images while using Dialogflow for the in-app chatbot.
 
 ## Objective
 To build a chat app for mobile devices using React Native. The app will
@@ -41,7 +41,7 @@ https://vppelli.github.io/portfolio-website/chat-app.html
   - Make sure Firebase you `allow read, write:` **true**
 - Adding your Firebase and Dialogflow keys into Project
 > I am using the Environment variables ( .env ) file.
-> **Environment variables in Node are used to store sensitive data such as passwords, API credentials, and other information that should not be written directly in code.**
+> **Environment variables in Node store sensitive data such as passwords, API credentials, and other information that should not be written directly in code.**
 > To use this create a .env file to store your Keys, **Make sure** you have it in the root of the project. Use Correct Naming `EXPO_PUBLIC_` must go in front of [NAME]="SecretAPIkey"
   - Location for FirebaseConfig in [App.js](https://github.com/vppelli/chat-app/blob/main/App.js#L47)
   <img src="https://github.com/vppelli/chat-app/blob/main/img/firebaseconfig.png">
